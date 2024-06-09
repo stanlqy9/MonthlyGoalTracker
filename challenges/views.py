@@ -13,15 +13,13 @@ def home_page(request):
 
 def monthly_challenges_by_number(request, month):
     try:
-        requested_month = list(monthly_challenges.keys())[month - 1]
-        return HttpResponseRedirect("/" + requested_month)
+        return HttpResponseRedirect("/" + list(monthly_challenges.keys())[month - 1])
     except:
         return HttpResponseNotFound("<h1>404 page not found, idiot</h1>")
 
 def monthly_challenge(request, month):
     try:
-        challenge_text = monthly_challenges[month]
-        return HttpResponse(challenge_text)
+        return HttpResponse(monthly_challenges[month])
     except:
         return HttpResponseNotFound("<h1>404 page not found, idiot</h1>")
 
