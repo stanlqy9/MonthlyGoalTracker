@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
-
+    <!-- For loop that iterates though the months list-->
         <ul> {% for x in months %}
             <li> <a href= "{% url 'month-challenge' month=x %}" > {{ x|title }} <a> </li>
            {% endfor %}
