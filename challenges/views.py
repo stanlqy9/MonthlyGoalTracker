@@ -1,31 +1,23 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
-from django.template.loader import render_to_string
 
 monthly_challenges = {
-    "january": "<h1>learn python, learn algorithms and data structures, learn django, and flask<h1>",
-    "february": "<h1>maybe learn java? IDK YET<h1>",
-    "march": "<h1>march<h1>",
-    "april": "<h1>this is april<h1>",
-    "may": "may",
-    "june": "june",
-    "july": "july",
-    "august": "august",
-    "september": "september",
-    "november": "november",
-    "december": "december",
+    "january": "learn python, learn algorithms and data structures, learn django, and flask",
+    "february": "maybe learn java? IDK YET",
+    "march": "this is march",
+    "april": "this is april",
+    "may": "this is may",
+    "june": "this is june",
+    "july": "this is july",
+    "august": "this is august",
+    "september": "this is september",
+    "november": "this is november",
+    "december": "this is december",
     }
 
 def home_page(request):
-    list_items = ""
-    months = list(monthly_challenges.keys())
-    for month in months:
-        capitalized_month = month.capitalize()
-        month_path = reverse("month-challenge", args=[month])
-        list_items += f"<li><a href= '{month_path}'>{capitalized_month}</a></li>"
-    list_items = f"<ul>{list_items}</ul>"
-    return HttpResponse(list_items)
+    return render(request, "challenges/index.html", {"name": "Stanley", "months": list(monthly_challenges.keys())})
 
 def monthly_challenges_by_number(request, month):
     try:
@@ -38,10 +30,6 @@ def monthly_challenges_by_number(request, month):
 
 def monthly_challenge(request, month):
     try:
-        return HttpResponse(monthly_challenges[month])
+        return render(request, "challenges/challenge.html", {"month": month, "description": monthly_challenges[month],})
     except:
-        return HttpResponseNotFound("<h1>404 page not found, idiot</h1>")
-
-def practice_file(request):
-    data = render_to_string("challenges/challenge.html")
-    return HttpResponse(data)
+        return render(request, "challenges/challenge.html", {"err": "404"})
